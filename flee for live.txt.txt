@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>广告浮动</title>
+<style type="text/css">
+*{margin:0;padding:0;}
+#ad{width:300px;height:200px;border:1px solid #ff0000;
+	 background:yellow;border-radius:50%;
+	 position:absolute;top:0px;left:0px;
+	}
+#close{width:20px;height:20px;border:1px solid #fff000;background:blue;}
+</style>
+<script type="text/javascript">
+window.onload=function(){
+	var ad=document.getElementById("ad");
+	var close=document.getElementById("close");
+	//获得视窗大小
+	var win_top=document.documentElement.clientHeight;
+	var win_width=document.documentElement.clientWidth;
+	//图片最大移动距离
+	var diff_top=win_top-ad.offsetHeight;
+	var diff_width=win_width-ad.offsetWidth;
+	var x=11,y=11;
+	function run(){
+		//获取初始的位置
+		var old_left=ad.offsetLeft;
+		var old_top=ad.offsetTop;
+		
+		//计算新的left和top值
+		var newleft=old_left+x;
+		var newtop=old_top+y;
+		//赋值前判断
+		if(newtop>diff_top){
+			newtop=diff_top;
+		}
+		if(newleft>diff_width){
+			newleft=diff_width;
+		}
+		if(newtop<0){
+			newtop=0;
+		}
+		if(newleft<0){
+			newleft=0;
+		}
+
+
+
+		 //赋给图像值
+		 		
+		ad.style.left=newleft+"px";
+		ad.style.top=newtop+"px";
+		
+		if(newtop==diff_top){
+			 y=-11;
+		}
+		if(newtop==0){
+			 y=11;
+		}
+		if(newleft==diff_width){
+
+		 x=-11;
+		}
+		if(newleft==0){
+			x=11;
+		}
+	}
+	timer=setInterval(run,2)
+//结束定时器
+ad.onmouseover=function(){
+	clearInterval(timer);
+		}
+//恢复定时器
+ad.onmouseout=function(){
+	timer=setInterval(run,2)
+}
+//隐藏图片
+close.onclick=function(){
+	ad.style.display="none";
+}
+//窗口改变事件
+window.onresize=function(){
+	x=11;
+	y=11;
+   //重新获得视窗大小
+	win_top=document.documentElement.clientHeight;
+	win_width=document.documentElement.clientWidth;
+	//重算图片最大移动距离
+	diff_top=win_top-ad.offsetHeight;
+	diff_width=win_width-ad.offsetWidth;
+}
+}
+</script>
+</head>
+<body>
+<div id="ad">
+	<div id="close"></div>
+	<center><b>i love you</b></center>
+</div>
+</body>
+</html>
